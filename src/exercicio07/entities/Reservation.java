@@ -1,11 +1,15 @@
 package exercicio07.entities;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.concurrent.TimeUnit;
 
 public class Reservation {
 	private Integer roomNumber;
 	private Date checkInDate;
 	private Date checkOutDate;
+
+	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
 
 	public Reservation( ) {
 	}
@@ -40,12 +44,30 @@ public class Reservation {
 		this.checkOutDate = checkOutDate;
 	}
 
-	public Integer duration( ) {
-		return getCheckOutDate( ).toInstant( ).getNano( ) - checkInDate.toInstant( ).getNano( );
+	public Long duration( ) {
+//		Em dias
+		long milissecondsDiff = checkOutDate.getTime() - checkInDate.getTime();
+		return TimeUnit.DAYS.convert( milissecondsDiff,TimeUnit.MILLISECONDS );
 	}
 
 	public void updateDates( Date newCheckInDate, Date newCheckOutDate ) {
 		setCheckInDate( newCheckInDate );
 		setCheckOutDate( newCheckOutDate );
+	}
+
+	@Override
+	public String toString( ) {
+		StringBuilder sb = new StringBuilder();
+		sb.append( "Reservation:\n" );
+		sb.append( "Room [" );
+		sb.append( roomNumber );
+		sb.append( "\n, Check-in no dia" );
+		sb.append( sdf.format( checkInDate ) );
+		sb.append( "\n, Check-out no dia " );
+		sb.append( sdf.format( checkOutDate ) );
+		sb.append( "\n totalizando " );
+		sb.append( duration() );
+		sb.append( " \n]" );
+		return sb.toString();
 	}
 }
