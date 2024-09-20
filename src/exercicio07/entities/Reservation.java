@@ -1,5 +1,7 @@
 package exercicio07.entities;
 
+import exercicio07.exceptions.DomainException;
+
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.concurrent.TimeUnit;
@@ -14,7 +16,10 @@ public class Reservation {
 	public Reservation( ) {
 	}
 
-	public Reservation( Integer roomNumber, Date checkInDate, Date checkOutDate ) {
+	public Reservation( Integer roomNumber, Date checkInDate, Date checkOutDate ) throws DomainException {
+		if( ! checkOutDate.after( checkInDate ) ) {
+			throw new DomainException( "Check-out date must be after check-in date." );
+		}
 		this.roomNumber = roomNumber;
 		this.checkInDate = checkInDate;
 		this.checkOutDate = checkOutDate;
@@ -50,12 +55,12 @@ public class Reservation {
 		return TimeUnit.DAYS.convert( milissecondsDiff,TimeUnit.MILLISECONDS );
 	}
 
-	public void updateDates( Date newCheckInDate, Date newCheckOutDate ) {
+	public void updateDates( Date newCheckInDate, Date newCheckOutDate ) throws DomainException {
 		Date now = new Date( );
 		if( newCheckInDate.before( now ) || newCheckOutDate.before( now ) ) {
-			throw new IllegalArgumentException( "Check-out date must be future dates." );
+			throw new DomainException( "Check-out date must be future dates." );
 		} else if( ! newCheckOutDate.after( newCheckInDate ) ) {
-			throw new IllegalArgumentException( "Check-out date must be after check-in date." );
+			throw new DomainException( "Check-out date must be after check-in date." );
 		} else {
 			setCheckInDate( newCheckInDate );
 			setCheckOutDate( newCheckOutDate );

@@ -1,6 +1,7 @@
 package exercicio07;
 
 import exercicio07.entities.Reservation;
+import exercicio07.exceptions.DomainException;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -33,7 +34,7 @@ public class Program {
 			System.out.println( "Reservation: " + reservation );
 		} catch( ParseException e ) {
 			System.out.println( "Invalid date format" );
-		} catch( IllegalArgumentException e ) {
+		} catch( DomainException e ) {
 			System.out.println( "Error in reservation: " + e.getMessage( ) );
 		}
 		scanner.close();
