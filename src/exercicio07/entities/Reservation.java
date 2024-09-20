@@ -58,16 +58,16 @@ public class Reservation {
 	@Override
 	public String toString( ) {
 		StringBuilder sb = new StringBuilder();
-		sb.append( "Reservation:\n" );
-		sb.append( "Room [" );
+		sb.append( "Reservation: " );
+		sb.append( "Room " );
 		sb.append( roomNumber );
-		sb.append( "\n, Check-in no dia" );
+		sb.append( ", Check-in: " );
 		sb.append( sdf.format( checkInDate ) );
-		sb.append( "\n, Check-out no dia " );
+		sb.append( ", Check-out: " );
 		sb.append( sdf.format( checkOutDate ) );
-		sb.append( "\n totalizando " );
+		sb.append( ", for " );
 		sb.append( duration() );
-		sb.append( " \n]" );
+		sb.append( " nights." );
 		return sb.toString();
 	}
 }
