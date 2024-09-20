@@ -9,7 +9,7 @@ public class Reservation {
 	private Date checkInDate;
 	private Date checkOutDate;
 
-	private static SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
+	private static final SimpleDateFormat sdf = new SimpleDateFormat( "dd/MM/yyyy" );
 
 	public Reservation( ) {
 	}
@@ -50,32 +50,30 @@ public class Reservation {
 		return TimeUnit.DAYS.convert( milissecondsDiff,TimeUnit.MILLISECONDS );
 	}
 
-	public String updateDates( Date newCheckInDate, Date newCheckOutDate ) {
-		Date now = new Date();
+	public void updateDates( Date newCheckInDate, Date newCheckOutDate ) {
+		Date now = new Date( );
 		if( newCheckInDate.before( now ) || newCheckOutDate.before( now ) ) {
-			return "Error in reservation: Check-out date must be future dates.";
-		} else if( !newCheckOutDate.after( newCheckInDate ) ) {
-			return "Error in reservation: Check-out date must be after check-in date.";
+			throw new IllegalArgumentException( "Check-out date must be future dates." );
+		} else if( ! newCheckOutDate.after( newCheckInDate ) ) {
+			throw new IllegalArgumentException( "Check-out date must be after check-in date." );
 		} else {
 			setCheckInDate( newCheckInDate );
 			setCheckOutDate( newCheckOutDate );
 		}
-		return null;
 	}
 
 	@Override
 	public String toString( ) {
-		StringBuilder sb = new StringBuilder();
-		sb.append( "Reservation: " );
-		sb.append( "Room " );
-		sb.append( roomNumber );
-		sb.append( ", Check-in: " );
-		sb.append( sdf.format( checkInDate ) );
-		sb.append( ", Check-out: " );
-		sb.append( sdf.format( checkOutDate ) );
-		sb.append( ", for " );
-		sb.append( duration() );
-		sb.append( " nights." );
-		return sb.toString();
+		String sb = "Reservation: " +
+				"Room " +
+				roomNumber +
+				", Check-in: " +
+				sdf.format( checkInDate ) +
+				", Check-out: " +
+				sdf.format( checkOutDate ) +
+				", for " +
+				duration( ) +
+				" nights.";
+		return sb;
 	}
 }
