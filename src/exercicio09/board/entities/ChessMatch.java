@@ -1,7 +1,10 @@
 package exercicio09.board.entities;
 
 import exercicio09.board.Board;
+import exercicio09.board.Piece;
+import exercicio09.board.Position;
 import exercicio09.chess.enums.Color;
+import exercicio09.chess.exceptions.ChessException;
 import exercicio09.chess.pieces.ChessPiece;
 import exercicio09.chess.pieces.entities.*;
 
@@ -121,5 +124,26 @@ public class ChessMatch {
 		placeNewPiece( 'f', 1, new Bishop( board, Color.BLACK ) );
 		placeNewPiece( 'g', 1, new Knight( board, Color.BLACK ) );
 		placeNewPiece( 'h', 1, new Rook( board, Color.BLACK ) );
+	}
+
+	public ChessPiece performChessMove( ChessPosition sourcePosition, ChessPosition targetPosition ) {
+		Position source = sourcePosition.toPosition( );
+		Position target = targetPosition.toPosition( );
+		validateSourcePosition( source );
+		Piece capturedPiece = makeMove( source, target );
+		return ( ChessPiece ) capturedPiece;
+	}
+
+	private Piece makeMove( Position source, Position target ) {
+		Piece piece = board.removePiece( source );
+		Piece capturedPiece = board.removePiece( target );
+		board.placePiece( piece, target );
+		return capturedPiece;
+	}
+
+	private void validateSourcePosition( Position source ) {
+		if( ! board.thereIsAPiece( source ) ) {
+			throw new ChessException( "Position not on the board." );
+		}
 	}
 }

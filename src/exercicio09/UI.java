@@ -1,7 +1,11 @@
 package exercicio09;
 
+import exercicio09.board.entities.ChessPosition;
 import exercicio09.chess.enums.Color;
 import exercicio09.chess.pieces.ChessPiece;
+
+import java.util.InputMismatchException;
+import java.util.Scanner;
 
 public class UI {
 	//TIP Using ANSI colors to improve visually the program
@@ -49,5 +53,16 @@ public class UI {
 			}
 		}
 		System.out.print( " " );
+	}
+
+	public static ChessPosition readChessPosition( Scanner scanner ) {
+		try {
+			String position = scanner.nextLine( );
+			char column = position.charAt( 0 );
+			int row = Integer.parseInt( position.substring( 1 ) );
+			return new ChessPosition( column, row );
+		} catch( RuntimeException e ) {
+			throw new InputMismatchException( "Error reading ChessPosition. Valid input from 'a1' to 'h8'." );
+		}
 	}
 }

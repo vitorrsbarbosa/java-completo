@@ -1,6 +1,8 @@
 package exercicio09.chess.exceptions;
 
-public class ChessException extends RuntimeException {
+import exercicio09.board.exceptions.BoardException;
+
+public class ChessException extends BoardException {
 	public ChessException( String message ) {
 		super( message );
 	}

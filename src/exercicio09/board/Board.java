@@ -52,10 +52,16 @@ public class Board {
 	}
 
 	public Piece removePiece( Position position ) {
-		if( ! thereIsAPiece( position ) ) {
-			throw new BoardException( "There is no piece on " + position );
+		if( ! positionExists( position ) ) {
+			throw new BoardException( "There is no piece on the board." );
 		}
-		return pieces[ position.getRow( ) ][ position.getColumn( ) ];
+		if( piece( position ) == null ) {
+			return null;
+		}
+		Piece aux = piece( position );
+		aux.setPosition( null );
+		pieces[ position.getRow( ) ][ position.getColumn( ) ] = null;
+		return aux;
 	}
 
 	private boolean positionExists( int row, int column ) {
