@@ -2,6 +2,7 @@ package exercicio09.chess.pieces;
 
 import exercicio09.board.Board;
 import exercicio09.board.Piece;
+import exercicio09.board.Position;
 import exercicio09.chess.enums.Color;
 
 public abstract class ChessPiece extends Piece {
@@ -32,5 +33,10 @@ public abstract class ChessPiece extends Piece {
 
 	public void setColor( Color color ) {
 		this.color = color;
+	}
+
+	protected boolean isThereOpponentPiece( Position position) {
+		ChessPiece piece = (ChessPiece ) getBoard().piece( position );
+		return piece != null && piece.getColor( ) == color;
 	}
 }
