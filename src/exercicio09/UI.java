@@ -8,7 +8,7 @@ import java.util.InputMismatchException;
 import java.util.Scanner;
 
 public class UI {
-	//TIP Using ANSI colors to improve visually the program
+	// Using ANSI colors to improve visually the program
 	// (from this link)[https://stackoverflow.com/questions/5762491/how-to-print-color-in-console-using-system-out-println]
 	public static final String ANSI_RESET = "\u001B[0m";
 
@@ -29,6 +29,12 @@ public class UI {
 	public static final String ANSI_PURPLE_BACKGROUND = "\u001B[45m";
 	public static final String ANSI_CYAN_BACKGROUND = "\u001B[46m";
 	public static final String ANSI_WHITE_BACKGROUND = "\u001B[47m";
+
+	// https://stackoverflow.com/questions/2979383/java-clear-the-console
+	public static void clearScreen( ) {
+		System.out.print( "\033[H\033[2J" );
+		System.out.flush( );
+	}
 
 	public static void printBoard( ChessPiece[][] pieces ) {
 		System.out.println( );
