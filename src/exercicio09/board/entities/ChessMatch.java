@@ -143,7 +143,10 @@ public class ChessMatch {
 
 	private void validateSourcePosition( Position source ) {
 		if( ! board.thereIsAPiece( source ) ) {
-			throw new ChessException( "Position not on the board." );
+			throw new ChessException( "There is no piece on source position." );
+		}
+		if( ! board.piece( source ).isThereAnyPossibleMove( ) ) {
+			throw new ChessException( "There is no possible moves for the chosen piece." );
 		}
 	}
 }
