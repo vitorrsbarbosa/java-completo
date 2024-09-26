@@ -35,8 +35,40 @@ public abstract class ChessPiece extends Piece {
 		this.color = color;
 	}
 
-	protected boolean isThereOpponentPiece( Position position) {
-		ChessPiece piece = (ChessPiece ) getBoard().piece( position );
+	protected boolean isThereOpponentPiece( Position position ) {
+		ChessPiece piece = ( ChessPiece ) getBoard( ).piece( position );
 		return piece != null && piece.getColor( ) == color;
 	}
+
+	@Override
+	public boolean[][] possibleMoves( ) {
+		boolean[][] mat = new boolean[ getBoard( ).getRows( ) ][ getBoard( ).getColumns( ) ];
+		Position p = new Position( 0, 0 );
+		toRight( p, mat );
+		toDiagonalRightBellow( p, mat );
+		toBellow( p, mat );
+		toDiagonalLeftBellow( p, mat );
+		toLeft( p, mat );
+		toDiagonalLeftAbove( p, mat );
+		toAbove( p, mat );
+		toDiagonalRightAbove( p, mat );
+
+		return mat;
+	}
+
+	public abstract void toLeft( Position p, boolean[][] mat );
+
+	public abstract void toDiagonalRightBellow( Position p, boolean[][] mat );
+
+	public abstract void toRight( Position p, boolean[][] mat );
+
+	public abstract void toDiagonalLeftBellow( Position p, boolean[][] mat );
+
+	public abstract void toAbove( Position p, boolean[][] mat );
+
+	public abstract void toDiagonalLeftAbove( Position p, boolean[][] mat );
+
+	public abstract void toBellow( Position p, boolean[][] mat );
+
+	public abstract void toDiagonalRightAbove( Position p, boolean[][] mat );
 }
