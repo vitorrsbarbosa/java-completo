@@ -43,19 +43,19 @@ public abstract class ChessPiece extends Piece {
 	@Override
 	public abstract boolean[][] possibleMoves( );
 
-	public abstract void toLeft( Position p, boolean[][] mat );
+	public abstract void toNorth( Position p, boolean[][] mat );
 
-	public abstract void toDiagonalRightBellow( Position p, boolean[][] mat );
+	public abstract void toNorthEast( Position p, boolean[][] mat );
 
-	public abstract void toRight( Position p, boolean[][] mat );
+	public abstract void toEast( Position p, boolean[][] mat );
 
-	public abstract void toDiagonalLeftBellow( Position p, boolean[][] mat );
+	public abstract void toSouthEast( Position p, boolean[][] mat );
 
-	public abstract void toAbove( Position p, boolean[][] mat );
+	public abstract void toSouth( Position p, boolean[][] mat );
 
-	public abstract void toDiagonalLeftAbove( Position p, boolean[][] mat );
+	public abstract void toSouthWest( Position p, boolean[][] mat );
 
-	public abstract void toBellow( Position p, boolean[][] mat );
+	public abstract void toWest( Position p, boolean[][] mat );
 
-	public abstract void toDiagonalRightAbove( Position p, boolean[][] mat );
+	public abstract void toNorthWest( Position p, boolean[][] mat );
 }
