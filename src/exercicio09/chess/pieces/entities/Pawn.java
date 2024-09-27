@@ -13,15 +13,15 @@ public class Pawn extends ChessPiece {
 	@Override
 	public boolean[][] possibleMoves( ) {
 		boolean[][] mat = new boolean[ getBoard( ).getRows( ) ][ getBoard( ).getColumns( ) ];
-		Position p = new Position( 0,0 );
-		toRight( p,mat );
-		// toDiagonalRightBellow( p,mat );
-		toBellow( p,mat );
-		// toDiagonalLeftBellow( p,mat );
-		toLeft( p,mat );
-		// toDiagonalLeftAbove( p,mat );
-		toAbove( p,mat );
-		// toDiagonalRightAbove( p,mat );
+		Position p = new Position( 0, 0 );
+		toNorth( p, mat );
+		// toNorthEast( p,mat );
+		toEast( p, mat );
+		// toSouthEast( p,mat );
+		toSouth( p, mat );
+		// toSouthWest( p,mat );
+		toWest( p, mat );
+		// toNorthWest( p,mat );
 
 		return mat;
 	}
@@ -32,12 +32,31 @@ public class Pawn extends ChessPiece {
 	}
 
 	@Override
-	public void toRight(Position p, boolean[][] mat ) {
+	public void toNorth( Position p, boolean[][] mat ) {
+
+	}
+
+	@Override
+	public void toNorthEast( Position p, boolean[][] mat ) {
+	}
+
+	@Override
+	public void toEast( Position p, boolean[][] mat ) {
 		mat[ position.getRow( ) ][ position.getColumn( ) ] = false;
 	}
 
 	@Override
-	public void toDiagonalRightBellow( Position p,boolean[][] mat ) {
+	public void toSouthEast( Position p, boolean[][] mat ) {
+
+	}
+
+	@Override
+	public void toSouth( Position p, boolean[][] mat ) {
+
+	}
+
+	@Override
+	public void toSouthWest( Position p, boolean[][] mat ) {
 		p.setValues( position.getRow( ) + 1, position.getColumn( ) + 1 );
 		while( getBoard( ).positionExists( position ) && getBoard( ).thereIsAPiece( position ) && isThereOpponentPiece( position ) ) {
 			mat[ position.getRow( ) ][ position.getColumn( ) ] = true;
@@ -46,31 +65,12 @@ public class Pawn extends ChessPiece {
 	}
 
 	@Override
-	public void toBellow( Position p,boolean[][] mat ) {
-
-	}
-
-	@Override
-	public void toDiagonalLeftBellow( Position p,boolean[][] mat ) {
-
-	}
-
-	@Override
-	public void toLeft( Position p,boolean[][] mat ) {
+	public void toWest( Position p, boolean[][] mat ) {
 		mat[ position.getRow( ) ][ position.getColumn( ) ] = false;
 	}
 
 	@Override
-	public void toDiagonalLeftAbove( Position p,boolean[][] mat ) {
-	}
-
-	@Override
-	public void toAbove( Position p,boolean[][] mat ) {
-
-	}
-
-	@Override
-	public void toDiagonalRightAbove( Position p,boolean[][] mat ) {
+	public void toNorthWest( Position p, boolean[][] mat ) {
 
 	}
 }
