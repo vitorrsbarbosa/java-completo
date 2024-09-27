@@ -14,10 +14,10 @@ public class Bishop extends ChessPiece {
 	public boolean[][] possibleMoves( ) {
 		boolean[][] mat = new boolean[ getBoard( ).getRows( ) ][ getBoard( ).getColumns( ) ];
 		Position p = new Position( 0, 0 );
-		toDiagonalRightBellow( p, mat );
-		toDiagonalLeftBellow( p, mat );
-		toDiagonalLeftAbove( p, mat );
-		toDiagonalRightAbove( p, mat );
+		toNorthEast( p, mat );
+		toSouthEast( p, mat );
+		toSouthWest( p, mat );
+		toNorthWest( p, mat );
 
 		return mat;
 	}
@@ -28,42 +28,74 @@ public class Bishop extends ChessPiece {
 	}
 
 	@Override
-	public void toLeft( Position p, boolean[][] mat ) {
-
+	public void toNorth( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
-	public void toDiagonalRightBellow( Position p, boolean[][] mat ) {
-
+	public void toNorthEast( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ) - 1, position.getColumn( ) + 1 );
+		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+			newPosition.setValues( newPosition.getRow( ) - 1, newPosition.getColumn( ) + 1 );
+		}
+		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+		}
 	}
 
 	@Override
-	public void toRight( Position p, boolean[][] mat ) {
-
+	public void toEast( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
-	public void toDiagonalLeftBellow( Position p, boolean[][] mat ) {
-
+	public void toSouthEast( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ) + 1, position.getColumn( ) + 1 );
+		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+			newPosition.setValues( newPosition.getRow( ) + 1, newPosition.getColumn( ) + 1 );
+		}
+		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+		}
 	}
 
 	@Override
-	public void toAbove( Position p, boolean[][] mat ) {
-
+	public void toSouth( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
-	public void toDiagonalLeftAbove( Position p, boolean[][] mat ) {
-
+	public void toSouthWest( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ) + 1, position.getColumn( ) - 1 );
+		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+			newPosition.setValues( newPosition.getRow( ) + 1, newPosition.getColumn( ) - 1 );
+		}
+		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+		}
 	}
 
 	@Override
-	public void toBellow( Position p, boolean[][] mat ) {
-
+	public void toWest( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
-	public void toDiagonalRightAbove( Position p, boolean[][] mat ) {
-
+	public void toNorthWest( Position newPosition, boolean[][] mat ) {
+		newPosition.setValues( position.getRow( ) - 1, position.getColumn( ) - 1 );
+		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+			newPosition.setValues( newPosition.getRow( ) - 1, newPosition.getColumn( ) - 1 );
+		}
+		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
+			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+		}
 	}
 }
