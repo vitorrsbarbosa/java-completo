@@ -1,6 +1,6 @@
-package exercicio09.chess.exceptions;
+package exercicio09.chess;
 
-import exercicio09.board.exceptions.BoardException;
+import exercicio09.boardgame.BoardException;
 
 public class ChessException extends BoardException {
 	public ChessException( String message ) {

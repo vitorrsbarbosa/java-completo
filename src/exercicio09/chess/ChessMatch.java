@@ -1,12 +1,9 @@
-package exercicio09.board.entities;
+package exercicio09.chess;
 
-import exercicio09.board.Board;
-import exercicio09.board.Piece;
-import exercicio09.board.Position;
-import exercicio09.chess.enums.Color;
-import exercicio09.chess.exceptions.ChessException;
-import exercicio09.chess.pieces.ChessPiece;
-import exercicio09.chess.pieces.entities.*;
+import exercicio09.boardgame.Board;
+import exercicio09.boardgame.Piece;
+import exercicio09.boardgame.Position;
+import exercicio09.chess.pieces.*;
 
 public class ChessMatch {
 	private int turn;

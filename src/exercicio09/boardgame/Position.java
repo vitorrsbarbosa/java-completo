@@ -1,4 +1,4 @@
-package exercicio09.board;
+package exercicio09.boardgame;
 
 public class Position {
 	private int row;

@@ -1,9 +1,8 @@
-package exercicio09.chess.pieces;
+package exercicio09.chess;
 
-import exercicio09.board.Board;
-import exercicio09.board.Piece;
-import exercicio09.board.Position;
-import exercicio09.chess.enums.Color;
+import exercicio09.boardgame.Board;
+import exercicio09.boardgame.Piece;
+import exercicio09.boardgame.Position;
 
 public abstract class ChessPiece extends Piece {
 	private Color color;

@@ -1,4 +1,4 @@
-package exercicio09.board.exceptions;
+package exercicio09.boardgame;
 
 public class BoardException extends RuntimeException {
 	public BoardException( String message ) {

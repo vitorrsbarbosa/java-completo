@@ -1,18 +1,18 @@
-package exercicio09.chess.pieces.entities;
+package exercicio09.chess.pieces;
 
-import exercicio09.board.Board;
-import exercicio09.board.Position;
-import exercicio09.chess.enums.Color;
-import exercicio09.chess.pieces.ChessPiece;
+import exercicio09.boardgame.Board;
+import exercicio09.boardgame.Position;
+import exercicio09.chess.ChessPiece;
+import exercicio09.chess.Color;
 
-public class Queen extends ChessPiece {
-	public Queen( Board board, Color color ) {
+public class Rook extends ChessPiece {
+	public Rook( Board board, Color color ) {
 		super( board, color );
 	}
 
 	@Override
 	public String toString( ) {
-		return "Q";
+		return "R";
 	}
 
 	@Override
@@ -20,13 +20,9 @@ public class Queen extends ChessPiece {
 		boolean[][] mat = new boolean[ getBoard( ).getRows( ) ][ getBoard( ).getColumns( ) ];
 		Position p = new Position( 0, 0 );
 		toNorth( p, mat );
-		toNorthEast( p, mat );
 		toEast( p, mat );
-		toSouthEast( p, mat );
 		toSouth( p, mat );
-		toSouthWest( p, mat );
 		toWest( p, mat );
-		toNorthWest( p, mat );
 
 		return mat;
 	}
@@ -45,14 +41,8 @@ public class Queen extends ChessPiece {
 
 	@Override
 	public void toNorthEast( Position newPosition, boolean[][] mat ) {
-		newPosition.setValues( position.getRow( ) - 1, position.getColumn( ) + 1 );
-		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-			newPosition.setValues( newPosition.getRow( ) - 1, newPosition.getColumn( ) + 1 );
-		}
-		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-		}
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
@@ -69,14 +59,8 @@ public class Queen extends ChessPiece {
 
 	@Override
 	public void toSouthEast( Position newPosition, boolean[][] mat ) {
-		newPosition.setValues( position.getRow( ) + 1, position.getColumn( ) + 1 );
-		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-			newPosition.setValues( newPosition.getRow( ) + 1, newPosition.getColumn( ) + 1 );
-		}
-		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-		}
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
@@ -93,14 +77,8 @@ public class Queen extends ChessPiece {
 
 	@Override
 	public void toSouthWest( Position newPosition, boolean[][] mat ) {
-		newPosition.setValues( position.getRow( ) + 1, position.getColumn( ) - 1 );
-		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-			newPosition.setValues( newPosition.getRow( ) + 1, newPosition.getColumn( ) - 1 );
-		}
-		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-		}
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 
 	@Override
@@ -117,13 +95,7 @@ public class Queen extends ChessPiece {
 
 	@Override
 	public void toNorthWest( Position newPosition, boolean[][] mat ) {
-		newPosition.setValues( position.getRow( ) - 1, position.getColumn( ) - 1 );
-		while( getBoard( ).positionExists( newPosition ) && ! getBoard( ).thereIsAPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-			newPosition.setValues( newPosition.getRow( ) - 1, newPosition.getColumn( ) - 1 );
-		}
-		if( getBoard( ).positionExists( newPosition ) && isThereOpponentPiece( newPosition ) ) {
-			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
-		}
+		newPosition.setValues( position.getRow( ), position.getColumn( ) );
+		mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = false;
 	}
 }

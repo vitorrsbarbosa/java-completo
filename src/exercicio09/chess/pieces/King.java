@@ -1,9 +1,9 @@
-package exercicio09.chess.pieces.entities;
+package exercicio09.chess.pieces;
 
-import exercicio09.board.Board;
-import exercicio09.board.Position;
-import exercicio09.chess.enums.Color;
-import exercicio09.chess.pieces.ChessPiece;
+import exercicio09.boardgame.Board;
+import exercicio09.boardgame.Position;
+import exercicio09.chess.ChessPiece;
+import exercicio09.chess.Color;
 
 public class King extends ChessPiece {
 	public King( Board board, Color color ) {

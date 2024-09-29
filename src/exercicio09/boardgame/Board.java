@@ -1,6 +1,4 @@
-package exercicio09.board;
-
-import exercicio09.board.exceptions.BoardException;
+package exercicio09.boardgame;
 
 public class Board {
 	private int rows;

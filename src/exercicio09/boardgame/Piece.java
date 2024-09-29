@@ -1,4 +1,4 @@
-package exercicio09.board;
+package exercicio09.boardgame;
 
 public abstract class Piece {
 	protected Position position;

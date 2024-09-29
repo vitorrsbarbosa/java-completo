@@ -1,7 +1,6 @@
-package exercicio09.board.entities;
+package exercicio09.chess;
 
-import exercicio09.board.Position;
-import exercicio09.chess.exceptions.ChessException;
+import exercicio09.boardgame.Position;
 
 public class ChessPosition {
 	private final char column;

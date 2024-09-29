@@ -1,8 +1,8 @@
-package exercicio09;
+package exercicio09.application;
 
-import exercicio09.board.entities.ChessPosition;
-import exercicio09.chess.enums.Color;
-import exercicio09.chess.pieces.ChessPiece;
+import exercicio09.chess.ChessPiece;
+import exercicio09.chess.ChessPosition;
+import exercicio09.chess.Color;
 
 import java.util.InputMismatchException;
 import java.util.Scanner;
