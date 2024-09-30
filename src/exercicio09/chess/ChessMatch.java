@@ -3,7 +3,8 @@ package exercicio09.chess;
 import exercicio09.boardgame.Board;
 import exercicio09.boardgame.Piece;
 import exercicio09.boardgame.Position;
-import exercicio09.chess.pieces.*;
+import exercicio09.chess.pieces.King;
+import exercicio09.chess.pieces.Rook;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -102,28 +103,36 @@ public class ChessMatch {
 	}
 
 	private void initialSetup( ) {
-		placeNewPiece( 'a', 8, new Rook( board, Color.WHITE ) );
-		placeNewPiece( 'b', 8, new Knight( board, Color.WHITE ) );
-		placeNewPiece( 'c', 8, new Bishop( board, Color.WHITE ) );
-		placeNewPiece( 'd', 8, new Queen( board, Color.WHITE ) );
-		placeNewPiece( 'e', 8, new King( board, Color.WHITE ) );
-		placeNewPiece( 'f', 8, new Bishop( board, Color.WHITE ) );
-		placeNewPiece( 'g', 8, new Knight( board, Color.WHITE ) );
-		placeNewPiece( 'h', 8, new Rook( board, Color.WHITE ) );
+//		placeNewPiece( 'a', 8, new Rook( board, Color.WHITE ) );
+//		placeNewPiece( 'b', 8, new Knight( board, Color.WHITE ) );
+//		placeNewPiece( 'c', 8, new Bishop( board, Color.WHITE ) );
+//		placeNewPiece( 'd', 8, new Queen( board, Color.WHITE ) );
+//		placeNewPiece( 'e', 8, new King( board, Color.WHITE ) );
+//		placeNewPiece( 'f', 8, new Bishop( board, Color.WHITE ) );
+//		placeNewPiece( 'g', 8, new Knight( board, Color.WHITE ) );
+//		placeNewPiece( 'h', 8, new Rook( board, Color.WHITE ) );
 
 //		for( char i = 'a'; i <= 'h'; i++ ) {
 //			placeNewPiece( i, 7, new Pawn( board, Color.WHITE ) );
 //			placeNewPiece( i, 2, new Pawn( board, Color.BLACK ) );
 //		}
 
-		placeNewPiece( 'a', 1, new Rook( board, Color.BLACK ) );
-		placeNewPiece( 'b', 1, new Knight( board, Color.BLACK ) );
-		placeNewPiece( 'c', 1, new Bishop( board, Color.BLACK ) );
-		placeNewPiece( 'd', 1, new King( board, Color.BLACK ) );
-		placeNewPiece( 'e', 1, new Queen( board, Color.BLACK ) );
-		placeNewPiece( 'f', 1, new Bishop( board, Color.BLACK ) );
-		placeNewPiece( 'g', 1, new Knight( board, Color.BLACK ) );
-		placeNewPiece( 'h', 1, new Rook( board, Color.BLACK ) );
+//		placeNewPiece( 'a', 1, new Rook( board, Color.BLACK ) );
+//		placeNewPiece( 'b', 1, new Knight( board, Color.BLACK ) );
+//		placeNewPiece( 'c', 1, new Bishop( board, Color.BLACK ) );
+//		placeNewPiece( 'd', 1, new King( board, Color.BLACK ) );
+//		placeNewPiece( 'e', 1, new Queen( board, Color.BLACK ) );
+//		placeNewPiece( 'f', 1, new Bishop( board, Color.BLACK ) );
+//		placeNewPiece( 'g', 1, new Knight( board, Color.BLACK ) );
+//		placeNewPiece( 'h', 1, new Rook( board, Color.BLACK ) );
+
+		placeNewPiece( 'h', 7, new Rook( board, Color.WHITE ) );
+		placeNewPiece( 'd', 1, new Rook( board, Color.WHITE ) );
+		placeNewPiece( 'e', 1, new King( board, Color.WHITE ) );
+
+		placeNewPiece( 'b', 8, new Rook( board, Color.BLACK ) );
+		placeNewPiece( 'a', 8, new King( board, Color.BLACK ) );
+
 	}
 
 	private void nextTurn( ) {
@@ -158,6 +167,33 @@ public class ChessMatch {
 		return false;
 	}
 
+	private boolean testCheckMate( Color color ) {
+		if( ! testCheck( color ) ) {
+			return false;
+		}
+		List<Piece> list = piecesOnTheBoard.stream( ).filter( x -> ( ( ChessPiece ) x ).getColor( ) == color ).toList( );
+		for( Piece p : list ) {
+			boolean[][] mat = p.possibleMoves( );
+			for( int i = 0; i < board.getRows( ); i++ ) {
+				for( int j = 0; j < board.getColumns( ); j++ ) {
+					if( mat[ i ][ j ] ) {
+						Position source1 = p.getPosition( );
+						Position source2 = ( ( ChessPiece ) p ).getChessPosition( ).toPosition( );
+						Position target = new Position( i, j );
+						Piece capturedPiece = makeMove( source1, target );
+						boolean testCheck = testCheck( color );
+						undoMove( source1,target,capturedPiece );
+
+						if(!testCheck) {
+							return false;
+						}
+					}
+				}
+			}
+		}
+		return true;
+	}
+
 	private void placeNewPiece( char column, int row, ChessPiece piece ) {
 		board.placePiece( piece, new ChessPosition( column, row ).toPosition( ) );
 		piecesOnTheBoard.add( piece );
@@ -179,7 +215,11 @@ public class ChessMatch {
 			undoMove( source, target, capturedPiece );
 			throw new ChessException( "You can't put yourself in check" );
 		}
-		check = testCheck( opponent( currentPlayer ) ) ;
+		check = testCheck( opponent( currentPlayer ) );
+
+		if(testCheckMate( opponent( currentPlayer ) ) ) {
+			checkMate = true;
+		}
 		nextTurn( );
 		return ( ChessPiece ) capturedPiece;
 	}

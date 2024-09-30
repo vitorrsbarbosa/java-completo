@@ -45,10 +45,14 @@ public class UI {
 		printCapturedPieces( captured );
 		System.out.println( );
 		System.out.println( "Turn: " + match.getTurn( ) );
-		System.out.println( "Waiting player: " + match.getCurrentPlayer( ) );
-
-		if(match.isCheck()){
-			System.out.println( "CHECK!" );
+		if( ! match.isCheckMate( ) ) {
+			System.out.println( "Waiting player: " + match.getCurrentPlayer( ) );
+			if( match.isCheck( ) ) {
+				System.out.println( "CHECK!" );
+			}
+		} else {
+			System.out.println( "CHECK MATE!" );
+			System.out.println( "Winner: " + match.getCurrentPlayer( ) );
 		}
 	}
 
