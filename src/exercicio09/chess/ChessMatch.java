@@ -215,12 +215,13 @@ public class ChessMatch {
 			undoMove( source, target, capturedPiece );
 			throw new ChessException( "You can't put yourself in check" );
 		}
-		check = testCheck( opponent( currentPlayer ) );
+		check = (testCheck( opponent( currentPlayer ) ))? true:false;
 
 		if(testCheckMate( opponent( currentPlayer ) ) ) {
 			checkMate = true;
+		} else {
+			nextTurn( );
 		}
-		nextTurn( );
 		return ( ChessPiece ) capturedPiece;
 	}
 
