@@ -7,6 +7,7 @@ import exercicio09.boardgame.Position;
 public abstract class ChessPiece extends Piece {
 	private Color color;
 	private Board board;
+	private int moveCount;
 
 	public ChessPiece( ) {
 	}
@@ -32,6 +33,22 @@ public abstract class ChessPiece extends Piece {
 
 	public void setColor( Color color ) {
 		this.color = color;
+	}
+
+	public int getMoveCount( ) {
+		return moveCount;
+	}
+
+	public void setMoveCount( int moveCount ) {
+		this.moveCount = moveCount;
+	}
+
+	public void increaseMoveCount( ) {
+		setMoveCount( moveCount++ );
+	}
+
+	public void decreaseMoveCount( ) {
+		setMoveCount( moveCount-- );
 	}
 
 	protected boolean isThereOpponentPiece( Position position ) {
