@@ -5,6 +5,9 @@ import exercicio09.boardgame.Piece;
 import exercicio09.boardgame.Position;
 import exercicio09.chess.pieces.*;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ChessMatch {
 	private int turn;
 	private Color currentPlayer;
@@ -14,8 +17,13 @@ public class ChessMatch {
 	private ChessPiece promoted;
 	private Board board;
 
+	private final List<Piece> piecesOnTheBoard = new ArrayList<>( );
+	private final List<Piece> capturedPieces = new ArrayList<>( );
+
 	public ChessMatch( ) {
 		board = new Board( 8, 8 );
+		setTurn( 1 );
+		setCurrentPlayer( Color.WHITE );
 		initialSetup( );
 	}
 
@@ -119,8 +127,14 @@ public class ChessMatch {
 		placeNewPiece( 'h', 1, new Rook( board, Color.BLACK ) );
 	}
 
+	private void nextTurn( ) {
+		setTurn( getTurn( ) + 1 );
+		setCurrentPlayer( currentPlayer.equals( Color.WHITE ) ? Color.BLACK : Color.WHITE );
+	}
+
 	private void placeNewPiece( char column, int row, ChessPiece piece ) {
 		board.placePiece( piece, new ChessPosition( column, row ).toPosition( ) );
+		piecesOnTheBoard.add( piece );
 	}
 
 	public boolean[][] possibleMoves( ChessPosition sourcePosition ) {
@@ -128,12 +142,14 @@ public class ChessMatch {
 		validateSourcePosition( position );
 		return board.piece( position ).possibleMoves( );
 	}
+
 	public ChessPiece performChessMove( ChessPosition sourcePosition, ChessPosition targetPosition ) {
 		Position source = sourcePosition.toPosition( );
 		Position target = targetPosition.toPosition( );
 		validateSourcePosition( source );
 		validateTargetPosition( source, target );
 		Piece capturedPiece = makeMove( source, target );
+		nextTurn( );
 		return ( ChessPiece ) capturedPiece;
 	}
 
@@ -141,12 +157,29 @@ public class ChessMatch {
 		Piece piece = board.removePiece( source );
 		Piece capturedPiece = board.removePiece( target );
 		board.placePiece( piece, target );
+		if( capturedPiece != null ) {
+			piecesOnTheBoard.remove( capturedPiece );
+			capturedPieces.add( capturedPiece );
+		}
 		return capturedPiece;
+	}
+
+	private void undoMove( Position source, Position target, Piece capturedPiece ) {
+		Piece p = board.removePiece( target );
+		board.placePiece( p, source );
+		if( capturedPiece != null ) {
+			board.placePiece( capturedPiece, target );
+			capturedPieces.remove( capturedPiece );
+			piecesOnTheBoard.add( capturedPiece );
+		}
 	}
 
 	private void validateSourcePosition( Position source ) {
 		if( ! board.thereIsAPiece( source ) ) {
 			throw new ChessException( "There is no piece on source position." );
+		}
+		if( currentPlayer != ( ( ChessPiece ) board.piece( source ) ).getColor( ) ) {
+			throw new ChessException( "These isn't your piece to play, choose some " + currentPlayer + " piece to play with." );
 		}
 		if( ! board.piece( source ).isThereAnyPossibleMove( ) ) {
 			throw new ChessException( "There is no possible moves for the chosen piece." );

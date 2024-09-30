@@ -1,10 +1,13 @@
 package exercicio09.application;
 
+import exercicio09.chess.ChessMatch;
 import exercicio09.chess.ChessPiece;
 import exercicio09.chess.ChessPosition;
 import exercicio09.chess.Color;
 
+import java.util.Arrays;
 import java.util.InputMismatchException;
+import java.util.List;
 import java.util.Scanner;
 
 public class UI {
@@ -34,6 +37,15 @@ public class UI {
 	public static void clearScreen( ) {
 		System.out.print( "\033[H\033[2J" );
 		System.out.flush( );
+	}
+
+	public static void printMatch( ChessMatch match, List<ChessPiece> captured ) {
+		printBoard( match.getPieces( ) );
+		System.out.println( );
+		printCapturedPieces( captured );
+		System.out.println( );
+		System.out.println( "Turn: " + match.getTurn( ) );
+		System.out.println( "Waiting player: " + match.getCurrentPlayer( ) );
 	}
 
 	public static void printBoard( ChessPiece[][] pieces ) {
@@ -74,6 +86,17 @@ public class UI {
 			}
 		}
 		System.out.print( " " );
+	}
+
+	private static void printCapturedPieces( List<ChessPiece> capturedPieces ) {
+		List<ChessPiece> white = capturedPieces.stream( ).filter( x -> x.getColor( ) == Color.WHITE ).toList( );
+		List<ChessPiece> black = capturedPieces.stream( ).filter( x -> x.getColor( ) == Color.BLACK ).toList( );
+
+		System.out.println( "Captured pieces: " );
+		System.out.print( "White: " );
+		System.out.println( ANSI_WHITE + Arrays.toString( white.toArray( ) ) + ANSI_RESET );
+		System.out.print( "Black: " );
+		System.out.println( ANSI_YELLOW + Arrays.toString( black.toArray( ) ) + ANSI_RESET );
 	}
 
 	public static ChessPosition readChessPosition( Scanner scanner ) {
