@@ -3,8 +3,7 @@ package exercicio09.chess;
 import exercicio09.boardgame.Board;
 import exercicio09.boardgame.Piece;
 import exercicio09.boardgame.Position;
-import exercicio09.chess.pieces.King;
-import exercicio09.chess.pieces.Rook;
+import exercicio09.chess.pieces.*;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -103,36 +102,28 @@ public class ChessMatch {
 	}
 
 	private void initialSetup( ) {
-//		placeNewPiece( 'a', 8, new Rook( board, Color.WHITE ) );
-//		placeNewPiece( 'b', 8, new Knight( board, Color.WHITE ) );
-//		placeNewPiece( 'c', 8, new Bishop( board, Color.WHITE ) );
-//		placeNewPiece( 'd', 8, new Queen( board, Color.WHITE ) );
-//		placeNewPiece( 'e', 8, new King( board, Color.WHITE ) );
-//		placeNewPiece( 'f', 8, new Bishop( board, Color.WHITE ) );
-//		placeNewPiece( 'g', 8, new Knight( board, Color.WHITE ) );
-//		placeNewPiece( 'h', 8, new Rook( board, Color.WHITE ) );
+		placeNewPiece( 'a', 8, new Rook( board, Color.BLACK ) );
+		placeNewPiece( 'b', 8, new Knight( board, Color.BLACK ) );
+		placeNewPiece( 'c', 8, new Bishop( board, Color.BLACK ) );
+		placeNewPiece( 'd', 8, new Queen( board, Color.BLACK ) );
+		placeNewPiece( 'e', 8, new King( board, Color.BLACK ) );
+		placeNewPiece( 'f', 8, new Bishop( board, Color.BLACK ) );
+		placeNewPiece( 'g', 8, new Knight( board, Color.BLACK ) );
+		placeNewPiece( 'h', 8, new Rook( board, Color.BLACK ) );
 
-//		for( char i = 'a'; i <= 'h'; i++ ) {
-//			placeNewPiece( i, 7, new Pawn( board, Color.WHITE ) );
-//			placeNewPiece( i, 2, new Pawn( board, Color.BLACK ) );
-//		}
+		for( char i = 'a'; i <= 'h'; i++ ) {
+			placeNewPiece( i, 7, new Pawn( board, Color.BLACK ) );
+			placeNewPiece( i, 2, new Pawn( board, Color.WHITE ) );
+		}
 
-//		placeNewPiece( 'a', 1, new Rook( board, Color.BLACK ) );
-//		placeNewPiece( 'b', 1, new Knight( board, Color.BLACK ) );
-//		placeNewPiece( 'c', 1, new Bishop( board, Color.BLACK ) );
-//		placeNewPiece( 'd', 1, new King( board, Color.BLACK ) );
-//		placeNewPiece( 'e', 1, new Queen( board, Color.BLACK ) );
-//		placeNewPiece( 'f', 1, new Bishop( board, Color.BLACK ) );
-//		placeNewPiece( 'g', 1, new Knight( board, Color.BLACK ) );
-//		placeNewPiece( 'h', 1, new Rook( board, Color.BLACK ) );
-
-		placeNewPiece( 'h', 7, new Rook( board, Color.WHITE ) );
-		placeNewPiece( 'd', 1, new Rook( board, Color.WHITE ) );
-		placeNewPiece( 'e', 1, new King( board, Color.WHITE ) );
-
-		placeNewPiece( 'b', 8, new Rook( board, Color.BLACK ) );
-		placeNewPiece( 'a', 8, new King( board, Color.BLACK ) );
-
+		placeNewPiece( 'a', 1, new Rook( board, Color.WHITE ) );
+		placeNewPiece( 'b', 1, new Knight( board, Color.WHITE ) );
+		placeNewPiece( 'c', 1, new Bishop( board, Color.WHITE ) );
+		placeNewPiece( 'd', 1, new King( board, Color.WHITE ) );
+		placeNewPiece( 'e', 1, new Queen( board, Color.WHITE ) );
+		placeNewPiece( 'f', 1, new Bishop( board, Color.WHITE ) );
+		placeNewPiece( 'g', 1, new Knight( board, Color.WHITE ) );
+		placeNewPiece( 'h', 1, new Rook( board, Color.WHITE ) );
 	}
 
 	private void nextTurn( ) {
@@ -182,9 +173,9 @@ public class ChessMatch {
 						Position target = new Position( i, j );
 						Piece capturedPiece = makeMove( source1, target );
 						boolean testCheck = testCheck( color );
-						undoMove( source1,target,capturedPiece );
+						undoMove( source1, target, capturedPiece );
 
-						if(!testCheck) {
+						if( ! testCheck ) {
 							return false;
 						}
 					}
@@ -215,9 +206,9 @@ public class ChessMatch {
 			undoMove( source, target, capturedPiece );
 			throw new ChessException( "You can't put yourself in check" );
 		}
-		check = (testCheck( opponent( currentPlayer ) ))? true:false;
+		check = testCheck( opponent( currentPlayer ) );
 
-		if(testCheckMate( opponent( currentPlayer ) ) ) {
+		if( testCheckMate( opponent( currentPlayer ) ) ) {
 			checkMate = true;
 		} else {
 			nextTurn( );
@@ -226,7 +217,7 @@ public class ChessMatch {
 	}
 
 	private Piece makeMove( Position source, Position target ) {
-		ChessPiece piece = (ChessPiece ) board.removePiece( source );
+		ChessPiece piece = ( ChessPiece ) board.removePiece( source );
 		piece.increaseMoveCount( );
 		Piece capturedPiece = board.removePiece( target );
 		board.placePiece( piece, target );
@@ -238,8 +229,8 @@ public class ChessMatch {
 	}
 
 	private void undoMove( Position source, Position target, Piece capturedPiece ) {
-		ChessPiece p = (ChessPiece)board.removePiece( target );
-		p.decreaseMoveCount();
+		ChessPiece p = ( ChessPiece ) board.removePiece( target );
+		p.decreaseMoveCount( );
 		board.placePiece( p, source );
 		if( capturedPiece != null ) {
 			board.placePiece( capturedPiece, target );
