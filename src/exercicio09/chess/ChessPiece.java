@@ -39,6 +39,10 @@ public abstract class ChessPiece extends Piece {
 		return piece != null && piece.getColor( ) != color;
 	}
 
+	public ChessPosition getChessPosition( ) {
+		return ChessPosition.fromPosition( position );
+	}
+
 	@Override
 	public abstract boolean[][] possibleMoves( );
 
