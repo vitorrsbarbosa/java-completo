@@ -39,16 +39,12 @@ public abstract class ChessPiece extends Piece {
 		return moveCount;
 	}
 
-	public void setMoveCount( int moveCount ) {
-		this.moveCount = moveCount;
-	}
-
 	public void increaseMoveCount( ) {
-		setMoveCount( moveCount++ );
+		moveCount++;
 	}
 
 	public void decreaseMoveCount( ) {
-		setMoveCount( moveCount-- );
+		moveCount--;
 	}
 
 	protected boolean isThereOpponentPiece( Position position ) {
