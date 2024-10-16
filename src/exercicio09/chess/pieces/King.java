@@ -2,12 +2,16 @@ package exercicio09.chess.pieces;
 
 import exercicio09.boardgame.Board;
 import exercicio09.boardgame.Position;
+import exercicio09.chess.ChessMatch;
 import exercicio09.chess.ChessPiece;
 import exercicio09.chess.Color;
 
 public class King extends ChessPiece {
-	public King( Board board, Color color ) {
+	private ChessMatch match;
+
+	public King( Board board, Color color, ChessMatch match ) {
 		super( board, color );
+		this.match = match;
 	}
 
 	@Override
@@ -32,7 +36,8 @@ public class King extends ChessPiece {
 		toSouthWest( p, mat );
 		toWest( p, mat );
 		toNorthWest( p, mat );
-
+		toMinorCastling( p, mat );
+		toMajorCastling( p, mat );
 		return mat;
 	}
 
@@ -97,6 +102,38 @@ public class King extends ChessPiece {
 		newPosition.setValues( position.getRow( ) - 1, position.getColumn( ) - 1 );
 		if( getBoard( ).positionExists( newPosition ) && canMove( newPosition ) ) {
 			mat[ newPosition.getRow( ) ][ newPosition.getColumn( ) ] = true;
+		}
+	}
+
+	private boolean testRookCastling( Position position ) {
+		ChessPiece piece = ( ChessPiece ) getBoard( ).piece( position );
+		return piece instanceof Rook && piece.getColor( ) == getColor( ) && piece.getMoveCount( ) == 0;
+	}
+
+	private void toMinorCastling( Position p, boolean[][] mat ) {
+		if( getMoveCount( ) == 0 && ! match.isCheck( ) ) {
+			Position minor = new Position( position.getRow( ), position.getColumn( ) + 3 );
+			if( testRookCastling( minor ) ) {
+				Position newRookPosition = new Position( position.getRow( ), position.getColumn( ) + 1 );
+				Position newKingPosition = new Position( position.getRow( ), position.getColumn( ) + 2 );
+				if( getBoard( ).piece( newRookPosition ) == null && getBoard( ).piece( newKingPosition ) == null ) {
+					mat[ position.getRow( ) ][ position.getColumn( ) + 2 ] = true;
+				}
+			}
+		}
+	}
+
+	private void toMajorCastling( Position p, boolean[][] mat ) {
+		if( getMoveCount( ) == 0 && ! match.isCheck( ) ) {
+			Position major = new Position( position.getRow( ), position.getColumn( ) - 3 );
+			if( testRookCastling( major ) ) {
+				Position newRookPosition = new Position( position.getRow( ), position.getColumn( ) - 1 );
+				Position newKingPosition = new Position( position.getRow( ), position.getColumn( ) - 2 );
+				Position nullPosition = new Position( position.getRow( ), position.getColumn( ) - 3 );
+				if( getBoard( ).piece( newRookPosition ) == null && getBoard( ).piece( newKingPosition ) == null && getBoard( ).piece( nullPosition ) == null ) {
+					mat[ position.getRow( ) ][ position.getColumn( ) - 2 ] = true;
+				}
+			}
 		}
 	}
 }
