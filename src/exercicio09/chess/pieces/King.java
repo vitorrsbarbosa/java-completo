@@ -7,7 +7,7 @@ import exercicio09.chess.ChessPiece;
 import exercicio09.chess.Color;
 
 public class King extends ChessPiece {
-	private ChessMatch match;
+	private final ChessMatch match;
 
 	public King( Board board, Color color, ChessMatch match ) {
 		super( board, color );
@@ -125,7 +125,7 @@ public class King extends ChessPiece {
 
 	private void toMajorCastling( Position p, boolean[][] mat ) {
 		if( getMoveCount( ) == 0 && ! match.isCheck( ) ) {
-			Position major = new Position( position.getRow( ), position.getColumn( ) - 3 );
+			Position major = new Position( position.getRow( ), position.getColumn( ) - 4 );
 			if( testRookCastling( major ) ) {
 				Position newRookPosition = new Position( position.getRow( ), position.getColumn( ) - 1 );
 				Position newKingPosition = new Position( position.getRow( ), position.getColumn( ) - 2 );
