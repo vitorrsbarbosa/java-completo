@@ -5,7 +5,6 @@ import exercicio09.boardgame.Piece;
 import exercicio09.boardgame.Position;
 import exercicio09.chess.pieces.*;
 
-import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -137,8 +136,7 @@ public class ChessMatch {
 	}
 
 	private ChessPiece king( Color color ) {
-		List<Piece> list = piecesOnTheBoard
-				.stream( ).filter( x -> ( ( ChessPiece ) x ).getColor( ) == color ).toList( );
+		List<Piece> list = piecesOnTheBoard.stream( ).filter( x -> ( ( ChessPiece ) x ).getColor( ) == color ).toList( );
 		for( Piece p : list ) {
 			if( p instanceof King ) {
 				return ( ChessPiece ) p;
@@ -212,11 +210,7 @@ public class ChessMatch {
 		// #specialMove promotion
 		promoted = null;
 		if( movedPiece instanceof Pawn ) {
-			if( movedPiece.getColor( ) == Color.WHITE && target.getRow( ) == 0 ) {
-				promoted = ( ChessPiece ) board.piece( target );
-				promoted = replacePromotedPiece( "Q" );
-			}
-			if( movedPiece.getColor( ) == Color.BLACK && target.getRow( ) == 7 ) {
+			if( ( movedPiece.getColor( ) == Color.WHITE && target.getRow( ) == 0 ) || ( movedPiece.getColor( ) == Color.BLACK && target.getRow( ) == 7 ) ) {
 				promoted = ( ChessPiece ) board.piece( target );
 				promoted = replacePromotedPiece( "Q" );
 			}
@@ -242,20 +236,20 @@ public class ChessMatch {
 			throw new IllegalStateException( "There is no piece to be promoted." );
 		}
 		if( ! type.equals( "B" ) && ! type.equals( "N" ) && ! type.equals( "R" ) && ! type.equals( "Q" ) ) {
-			throw new InvalidParameterException( "Invalid type for promotion." );
+			return promoted;
 		}
-		Position position = promoted.getChessPosition().toPosition( );
+		Position position = promoted.getChessPosition( ).toPosition( );
 		Piece piece = board.removePiece( position );
 		piecesOnTheBoard.remove( piece );
 
-		ChessPiece newPiece = newPiece( type,promoted.getColor() );
+		ChessPiece newPiece = newPiece( type, promoted.getColor( ) );
 		board.placePiece( newPiece, position );
 		piecesOnTheBoard.add( newPiece );
 
 		return newPiece;
 	}
 
-	private ChessPiece newPiece(String type,Color color) {
+	private ChessPiece newPiece( String type, Color color ) {
 		return switch( type ) {
 			case "B" -> new Bishop( board, color );
 			case "N" -> new Knight( board, color );

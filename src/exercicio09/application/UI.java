@@ -109,7 +109,7 @@ public class UI {
 
 	public static ChessPosition readChessPosition( Scanner scanner ) {
 		try {
-			String position = scanner.nextLine( );
+			String position = scanner.nextLine( ).toLowerCase( );
 			char column = position.charAt( 0 );
 			int row = Integer.parseInt( position.substring( 1 ) );
 			return new ChessPosition( column, row );
