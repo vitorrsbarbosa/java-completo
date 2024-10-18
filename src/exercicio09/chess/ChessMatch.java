@@ -5,6 +5,7 @@ import exercicio09.boardgame.Piece;
 import exercicio09.boardgame.Position;
 import exercicio09.chess.pieces.*;
 
+import java.security.InvalidParameterException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -208,6 +209,18 @@ public class ChessMatch {
 		}
 		ChessPiece movedPiece = ( ChessPiece ) board.piece( target );
 
+		// #specialMove promotion
+		promoted = null;
+		if( movedPiece instanceof Pawn ) {
+			if( movedPiece.getColor( ) == Color.WHITE && target.getRow( ) == 0 ) {
+				promoted = ( ChessPiece ) board.piece( target );
+				promoted = replacePromotedPiece( "Q" );
+			}
+			if( movedPiece.getColor( ) == Color.BLACK && target.getRow( ) == 7 ) {
+				promoted = ( ChessPiece ) board.piece( target );
+				promoted = replacePromotedPiece( "Q" );
+			}
+		}
 		check = testCheck( opponent( currentPlayer ) );
 
 		if( testCheckMate( opponent( currentPlayer ) ) ) {
@@ -222,6 +235,33 @@ public class ChessMatch {
 			enPassantVulnerable = null;
 		}
 		return ( ChessPiece ) capturedPiece;
+	}
+
+	public ChessPiece replacePromotedPiece( String type ) {
+		if( promoted == null ) {
+			throw new IllegalStateException( "There is no piece to be promoted." );
+		}
+		if( ! type.equals( "B" ) && ! type.equals( "N" ) && ! type.equals( "R" ) && ! type.equals( "Q" ) ) {
+			throw new InvalidParameterException( "Invalid type for promotion." );
+		}
+		Position position = promoted.getChessPosition().toPosition( );
+		Piece piece = board.removePiece( position );
+		piecesOnTheBoard.remove( piece );
+
+		ChessPiece newPiece = newPiece( type,promoted.getColor() );
+		board.placePiece( newPiece, position );
+		piecesOnTheBoard.add( newPiece );
+
+		return newPiece;
+	}
+
+	private ChessPiece newPiece(String type,Color color) {
+		return switch( type ) {
+			case "B" -> new Bishop( board, color );
+			case "N" -> new Knight( board, color );
+			case "R" -> new Rook( board, color );
+			default -> new Queen( board, color );
+		};
 	}
 
 	private Piece makeMove( Position source, Position target ) {
