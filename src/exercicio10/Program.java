@@ -1,20 +1,18 @@
 package exercicio10;
 
-import java.io.*;
-import java.util.Scanner;
+import exercicio10.files.ManipulateFiles;
+import exercicio10.read.ReadMethods;
+import exercicio10.write.WriteMethods;
 
 public class Program {
 	public static void main( String[] args ) {
-		String filePath = "C:\\Temp\\in.txt";
-		try(BufferedReader br = new BufferedReader(new FileReader(filePath))){
-			String line = br.readLine();
-			while(line != null){
-				System.out.println(line);
-				line = br.readLine();
-			}
+		ReadMethods.readFile01( );
+		ReadMethods.readFile02( );
+		ReadMethods.readFile03( );
 
-		} catch( IOException e ) {
-			System.err.println( "Error: " + e.getMessage() );
-		}
+		WriteMethods.writeFile( );
+		WriteMethods.writeNewFile( );
+
+		ManipulateFiles.readListOfFolders( );
 	}
 }
