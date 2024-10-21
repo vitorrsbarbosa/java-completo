@@ -14,5 +14,7 @@ public class Program {
 		WriteMethods.writeNewFile( );
 
 		ManipulateFiles.readListOfFolders( );
+		ManipulateFiles.readListOfFiles( );
+		ManipulateFiles.createNewFolder( );
 	}
 }

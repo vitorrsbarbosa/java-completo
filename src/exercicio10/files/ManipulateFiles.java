@@ -18,4 +18,31 @@ public class ManipulateFiles {
 		}
 		sc.close( );
 	}
+
+	public static void readListOfFiles( ) {
+		Scanner sc = new Scanner( System.in );
+		System.out.print( "Enter a folder path: " );
+		String strPath = sc.nextLine( );
+		File path = new File( strPath );
+
+		File[] files = path.listFiles( File::isFile );
+		System.out.println( "Files:" );
+		assert files != null;
+		for( File file : files ) {
+			System.out.println( file );
+		}
+		sc.close( );
+	}
+
+	public static void createNewFolder( ) {
+		Scanner sc = new Scanner( System.in );
+		System.out.print( "Enter a folder path: " );
+		String strPath = sc.nextLine( );
+		File path = new File( strPath );
+
+		boolean success = new File( path + "\\subdir" ).mkdir( );
+		assert success;
+
+		sc.close( );
+	}
 }
