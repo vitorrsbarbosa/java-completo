@@ -1,9 +1,5 @@
 package exercicio10;
 
-import exercicio10.files.ManipulateFiles;
-import exercicio10.read.ReadMethods;
-import exercicio10.write.WriteMethods;
-
 public class Program {
 	public static void main( String[] args ) {
 //		ReadMethods.readFile01( );
@@ -16,6 +12,6 @@ public class Program {
 //		ManipulateFiles.readListOfFolders( );
 //		ManipulateFiles.readListOfFiles( );
 //		ManipulateFiles.createNewFolder( );
-		ManipulateFiles.getPathInfo();
+//		ManipulateFiles.getPathInfo();
 	}
 }
