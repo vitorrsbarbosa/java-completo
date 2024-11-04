@@ -16,29 +16,28 @@ public class Program {
         Scanner sc = new Scanner( System.in );
 
         DateTimeFormatter dtf = DateTimeFormatter.ofPattern( "dd/MM/yyyy HH:mm" );
-
         System.out.println( "Enter rental data" );
         System.out.print( "Car model: " );
         String carModel = sc.nextLine( );
-        System.out.println( "Withdraw: (dd/MM/yyyy hh:mm) " );
-        LocalDateTime start = LocalDateTime.parse( sc.next( ), dtf );
-        System.out.println( "Return: (dd/MM/yyyy hh:mm)  " );
-        LocalDateTime end = LocalDateTime.parse( sc.next( ), dtf );
+        System.out.print( "Withdraw: (dd/MM/yyyy hh:mm) " );
+        LocalDateTime start = LocalDateTime.parse( sc.nextLine( ), dtf );
+        System.out.print( "Return: (dd/MM/yyyy hh:mm)  " );
+        LocalDateTime end = LocalDateTime.parse( sc.nextLine( ), dtf );
 
         CarRental cr = new CarRental( new Vehicle( carModel ), start, end );
 
-        System.out.println( "Enter price per hour: " );
+        System.out.print( "Enter price per hour: " );
         double pricePerHour = sc.nextDouble( );
-        System.out.println( "Enter price per day: " );
+        System.out.print( "Enter price per day: " );
         double pricePerDay = sc.nextDouble( );
 
         RentalService rentalService = new RentalService( pricePerHour, pricePerDay, new BrazilTaxService( ) );
         rentalService.processInvoice( cr );
 
-        System.out.println( "FATURA" );
-        System.out.println( "Basic payment: " + cr.getInvoice().getBasicPayment());
-        System.out.println( "Tax: " + cr.getInvoice().getTax() );
-        System.out.println( "Total payment: " + cr.getInvoice().getTotalPayment() );
+        System.out.println( "BILL" );
+        System.out.println( "Basic payment: " + cr.getInvoice( ).getBasicPayment( ) );
+        System.out.println( "Tax: " + cr.getInvoice( ).getTax( ) );
+        System.out.println( "Total payment: " + cr.getInvoice( ).getTotalPayment( ) );
 
 
         sc.close( );
