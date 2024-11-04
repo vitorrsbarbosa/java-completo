@@ -3,7 +3,6 @@ package modulo23.chessgame.chess;
 import modulo23.chessgame.boardgame.Board;
 import modulo23.chessgame.boardgame.Piece;
 import modulo23.chessgame.boardgame.Position;
-import exercicio09.chess.pieces.*;
 import modulo23.chessgame.chess.pieces.*;
 
 import java.util.ArrayList;
