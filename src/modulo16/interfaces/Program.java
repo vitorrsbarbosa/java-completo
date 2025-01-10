@@ -39,7 +39,6 @@ public class Program {
         System.out.println( "Tax: " + cr.getInvoice( ).getTax( ) );
         System.out.println( "Total payment: " + cr.getInvoice( ).getTotalPayment( ) );
 
-
         sc.close( );
     }
 }
