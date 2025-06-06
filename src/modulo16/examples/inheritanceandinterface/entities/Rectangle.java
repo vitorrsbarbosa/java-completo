@@ -6,9 +6,9 @@ public class Rectangle extends AbstractShape implements Shape{
     private double width;
     private double height;
 
-    public Rectangle(Color color, double side, double height) {
+    public Rectangle(Color color, double width, double height) {
         super(color);
-        this.width = side;
+        this.width = width;
         this.height = height;
     }
 
