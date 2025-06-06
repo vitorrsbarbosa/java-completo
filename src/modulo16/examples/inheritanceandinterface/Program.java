@@ -5,11 +5,25 @@ import modulo16.examples.inheritanceandinterface.entities.Circle;
 import modulo16.examples.inheritanceandinterface.entities.Rectangle;
 import modulo16.examples.inheritanceandinterface.enums.Color;
 
+import java.util.Scanner;
+
 public class Program {
     public static void main(String[] args) {
 
-        AbstractShape s1 = new Circle(Color.BLACK,2.0);
-        AbstractShape s2 = new Rectangle(Color.WHITE,3.0,4.0);
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter radius of the circle: ");
+        double radius = sc.nextDouble();
+        System.out.print("Enter color of the circle between Black and White: ");
+        Color circleColor = Color.valueOf(sc.next().toUpperCase());
+        System.out.println();
+        System.out.print("Now, input the width of the rectangle: ");
+        double width = sc.nextDouble();
+        System.out.print("And after that, input the height of the rectangle: ");
+        double height = sc.nextDouble();
+        System.out.print("Finally, please choose a color for the rectanagle: ");
+        Color rectangleColor = Color.valueOf(sc.next().toUpperCase());
+        AbstractShape s1 = new Circle(circleColor,radius);
+        AbstractShape s2 = new Rectangle(rectangleColor,width,height);
 
         System.out.println("Circle color: "+ s1.getColor());
         System.out.println("Circle area: "+ String.format("%.3f",s1.area()));
