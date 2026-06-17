@@ -17,14 +17,12 @@ public class ContractService {
 
 		// para cada mês de parcela realizar os seguintes cálculos
 		for( int i = 1; i <= months; i++ ) {
-			// Descobre o juro mensal e após isso incrementa ao valor da parcela
-			// Adiciona taxa de pagamento em cima do valor com juros
 			LocalDate dueDate = contract.getDate( ).plusMonths( i );
+			// Descobre o juro mensal e, após isso, adiciona ao valor base da parcela.
 			double interest = service.interest( baseValue, i );
-			baseValue = + interest;
-			double fee = service.paymentFee( baseValue );
-			baseValue = + fee;
-			contract.getInstallment( ).add( new Installment( dueDate,baseValue ) );
+			// Define a taxa de pagamento em cima do valor com juros.
+			double fee = service.paymentFee( baseValue + interest );
+			contract.getInstallment( ).add( new Installment( dueDate,baseValue + interest + fee ) );
 		}
 	}
 }
