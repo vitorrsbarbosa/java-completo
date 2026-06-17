@@ -2,7 +2,7 @@ package modulo16.examples.inheritanceandinterface.entities;
 
 import modulo16.examples.inheritanceandinterface.enums.Color;
 
-public class Rectangle extends AbstractShape implements Shape{
+public class Rectangle extends AbstractShape{
     private double width;
     private double height;
 
