@@ -1,11 +1,11 @@
 package modulo16.interfaces.exercise02.model;
 
-import modulo16.interfaces.exercise02.services.Shape;
+import modulo16.interfaces.exercise02.enums.Color;
 
 public class Circle extends AbstractShape {
 	private double radius;
-	public Circle() {}
-	public Circle(double radius) {
+	public Circle(Color color, double radius) {
+		super(color);
 		this.radius = radius;
 	}
 	public double getRadius() {

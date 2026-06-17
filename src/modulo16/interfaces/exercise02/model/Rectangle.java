@@ -1,11 +1,12 @@
 package modulo16.interfaces.exercise02.model;
 
+import modulo16.interfaces.exercise02.enums.Color;
+
 public class Rectangle extends AbstractShape {
 	private double width;
 	private double height;
-	public Rectangle() {}
-	public Rectangle(double width, double height) {
-		super();
+	public Rectangle( Color color, double width, double height) {
+		super(color);
 		this.width = width;
 		this.height = height;
 	}
