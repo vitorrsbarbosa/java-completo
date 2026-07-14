@@ -55,4 +55,9 @@ public class Product {
             return false;
         return true;
     }
+
+    @Override
+    public String toString() {
+      return "Product [name=" + name + ", price=" + price + "]";
+    }
 }
