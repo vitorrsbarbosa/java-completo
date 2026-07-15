@@ -4,7 +4,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import modulo18.predicate.entities.Product;
-import modulo18.predicate.utils.ProductPredicate;
+// import modulo18.predicate.utils.ProductPredicate;
 
 public class Program {
     public static void main(String[] args) {
@@ -17,7 +17,7 @@ public class Program {
 
         // Remover itens com valor igual ou superior a 100.00
 
-        list.removeIf(Product::staticProductPredicate);
+        list.removeIf(Product::productPredicate);
         list.forEach(System.out::println);
     }
 }

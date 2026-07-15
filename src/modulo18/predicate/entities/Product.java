@@ -33,7 +33,11 @@ public class Product {
         return name + ", " + String.format("%.2f", price);
     }
 
-    public static boolean staticProductPredicate(Product product) {
-        return product.getPrice() >= 100.00;
+    // public static boolean staticProductPredicate(Product product) {
+    //     return product.getPrice() >= 100.00;
+    // }
+
+    public boolean productPredicate() {
+        return price >= 100.00;
     }
 }
