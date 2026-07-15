@@ -16,9 +16,8 @@ public class Program {
         list.add(new Product("HD Case", 80.90));
 
         // Remover itens com valor igual ou superior a 100.00
-        list.removeIf(p -> p.getPrice() >= 100.00);
-        for (Product p : list) {
-            System.out.println(p);
-        }
+
+        list.removeIf(new ProductPredicate());
+        list.forEach(System.out::println);
     }
 }
