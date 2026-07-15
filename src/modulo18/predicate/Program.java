@@ -17,7 +17,7 @@ public class Program {
 
         // Remover itens com valor igual ou superior a 100.00
 
-        list.removeIf(new ProductPredicate());
+        list.removeIf(Product::staticProductPredicate);
         list.forEach(System.out::println);
     }
 }

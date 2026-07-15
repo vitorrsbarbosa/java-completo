@@ -32,4 +32,8 @@ public class Product {
     public String toString() {
         return name + ", " + String.format("%.2f", price);
     }
+
+    public static boolean staticProductPredicate(Product product) {
+        return product.getPrice() >= 100.00;
+    }
 }
