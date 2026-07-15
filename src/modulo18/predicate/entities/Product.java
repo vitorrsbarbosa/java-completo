@@ -37,7 +37,7 @@ public class Product {
     //     return product.getPrice() >= 100.00;
     // }
 
-    public boolean productPredicate() {
-        return price >= 100.00;
-    }
+    // public boolean productPredicate() {
+    //     return price >= 100.00;
+    // }
 }
