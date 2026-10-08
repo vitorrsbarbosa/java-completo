@@ -1,0 +1,24 @@
+Fazer um programa para ler os dados (nome, email e salério)
+de funcionarios a partir de um arquivo em formato .csv.
+
+Em seguida mostrar, em ordem alfabética, o email dos
+funciondrios cujo saldrio seja superior a um dado valor
+fornecido pelo usuario.
+
+Mostrar também a soma dos saldrios dos funciondrios cujo
+nome comega com a letra 'M'".
+
+
+
+Enter full file path: c:\temp\in.txt
+
+Enter salary: 2000.00
+
+Email of people whose salary is more than 2000.00:
+anna@gmail.com
+
+bob@gmail.com
+
+maria@gmail.com
+
+Sum of salary of people whose name starts with 'M': 4900.00
