@@ -24,6 +24,7 @@ public class Seller implements SellerInterface, MessageInterface {
         ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
+            connection.setAutoCommit(false);
             statement = connection.createStatement();
             resultSet = statement.executeQuery("SELECT * FROM seller");
 
@@ -36,8 +37,14 @@ public class Seller implements SellerInterface, MessageInterface {
                                 " -- BaseSalary: " + resultSet.getDouble("BaseSalary") +
                                 " -- DepartmentId: " + resultSet.getInt("DepartmentId"));
             }
+            connection.commit();
         } catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            try {
+                connection.rollback();
+                throw new DbException("Transaction cancelled! Caused by: " + e.getMessage());
+            } catch (SQLException e1) {
+                throw new DbException("Error trying to rollback transaction, " + e1.getMessage());
+            }
         } finally {
             DB.closeAll(statement, resultSet);
         }
@@ -50,6 +57,7 @@ public class Seller implements SellerInterface, MessageInterface {
         ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
+            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement(
                     "insert into seller" +
                             "(Name, Email, BirthDate, BaseSalary, DepartmentId)" +
@@ -64,9 +72,14 @@ public class Seller implements SellerInterface, MessageInterface {
             preparedStatement.setInt(5, 1);
 
             showMessageAboutRowsAffected(preparedStatement, "Done! Seller inserted: ");
-
+            connection.commit();
         } catch (SQLException | ParseException e) {
-            throw new DbException(e.getMessage());
+            try {
+                connection.rollback();
+                throw new DbException("Transaction cancelled! Caused by: " + e.getMessage());
+            } catch (SQLException e1) {
+                throw new DbException("Error trying to rollback transaction, " + e1.getMessage());
+            }
         } finally {
             DB.closeAll(preparedStatement, resultSet);
         }
@@ -79,6 +92,7 @@ public class Seller implements SellerInterface, MessageInterface {
         ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
+            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement("UPDATE seller " +
                     "SET BaseSalary = BaseSalary + ? " +
                     "WHERE DepartmentId = ?", Statement.RETURN_GENERATED_KEYS);
@@ -87,8 +101,14 @@ public class Seller implements SellerInterface, MessageInterface {
             preparedStatement.setInt(2, 5);
 
             showMessageAboutRowsAffected(preparedStatement, "Done! Seller updated ");
+            connection.commit();
         } catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            try {
+                connection.rollback();
+                throw new DbException("Transaction cancelled! Caused by: " + e.getMessage());
+            } catch (SQLException e1) {
+                throw new DbException("Error trying to rollback transaction, " + e1.getMessage());
+            }
         } finally {
             DB.closeAll(preparedStatement, resultSet);
         }
@@ -101,13 +121,20 @@ public class Seller implements SellerInterface, MessageInterface {
         ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
+            connection.setAutoCommit(false);
             preparedStatement = connection.prepareStatement("DELETE FROM Seller " +
                     "WHERE Id = ?");
             preparedStatement.setInt(1, 1);
 
             showMessageAboutRowsAffected(preparedStatement, "Done! Rows deleted: ");
+            connection.commit();
         } catch (SQLException e) {
-            throw new DbException(e.getMessage());
+            try {
+                connection.rollback();
+                throw new DbException("Transaction cancelled! Caused by: " + e.getMessage());
+            } catch (SQLException e1) {
+                throw new DbException("Error trying to rollback transaction, " + e1.getMessage());
+            }
         } finally {
             DB.closeAll(preparedStatement, resultSet);
         }
