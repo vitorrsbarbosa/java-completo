@@ -8,18 +8,18 @@ import java.sql.Statement;
 import java.text.SimpleDateFormat;
 
 import modulo20.dbmodel.entities.DB;
-import modulo20.dbmodel.exceptions.DbExceptions;
+import modulo20.dbmodel.exceptions.DbException;
 import modulo20.dbmodel.interfaces.DepartmentInterface;
+import modulo20.dbmodel.interfaces.MessageInterface;
 
-public class Department implements DepartmentInterface {
+public class Department implements DepartmentInterface, MessageInterface {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    Connection connection = null;
-    Statement statement = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
 
     @Override
     public void select() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
             statement = connection.createStatement();
@@ -31,28 +31,71 @@ public class Department implements DepartmentInterface {
                                 " -- Name: " + resultSet.getString("Name"));
             }
         } catch (SQLException e) {
-            throw new DbExceptions(e.getMessage());
+            throw new DbException(e.getMessage());
         } finally {
-            DB.closeAll(connection, statement, resultSet);
+            DB.closeAll(statement, resultSet);
         }
     }
 
     @Override
     public void insert() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'insert'");
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DB.getConnection();
+            preparedStatement = connection.prepareStatement("INSERT INTO department (Name) VALUES (?)",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setString(1, "Kitchen");
+            showMessageAboutRowsAffected(preparedStatement, "New Department inserted successfully!");
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeAll(preparedStatement, resultSet);
+        }
     }
 
     @Override
     public void update() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'update'");
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DB.getConnection();
+            preparedStatement = connection.prepareStatement("UPDATE department SET Name = ? WHERE Id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
+
+            preparedStatement.setString(1, "Tecnology");
+            preparedStatement.setInt(2, 2);
+
+            showMessageAboutRowsAffected(preparedStatement, "Department updated successfully!");
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeAll(preparedStatement, resultSet);
+        }
     }
 
     @Override
     public void delete() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DB.getConnection();
+            preparedStatement = connection.prepareStatement("DELETE FROM department WHERE Id = ?",
+                    Statement.RETURN_GENERATED_KEYS);
 
+            preparedStatement.setInt(1, 7);
+            showMessageAboutRowsAffected(preparedStatement,
+                    "Department deleted successfully!");
+
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeAll(preparedStatement, resultSet);
+        }
+    }
 }

@@ -1,10 +1,10 @@
 package modulo20.dbmodel.exceptions;
 
-public class DbExceptions extends RuntimeException {
+public class DbException extends RuntimeException {
 
     private final static long serialVersionUID = 1L;
 
-    public DbExceptions(String msg) {
+    public DbException(String msg) {
         super(msg);
     }
 

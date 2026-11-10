@@ -10,18 +10,18 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 
 import modulo20.dbmodel.entities.DB;
+import modulo20.dbmodel.interfaces.MessageInterface;
 import modulo20.dbmodel.interfaces.SellerInterface;
-import modulo20.dbmodel.exceptions.DbExceptions;
+import modulo20.dbmodel.exceptions.DbException;
 
-public class Seller implements SellerInterface {
+public class Seller implements SellerInterface, MessageInterface {
     SimpleDateFormat sdf = new SimpleDateFormat("dd/MM/yyyy");
-    Connection connection = null;
-    Statement statement = null;
-    PreparedStatement preparedStatement = null;
-    ResultSet resultSet = null;
 
     @Override
     public void select() {
+        Connection connection = null;
+        Statement statement = null;
+        ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
             statement = connection.createStatement();
@@ -37,14 +37,17 @@ public class Seller implements SellerInterface {
                                 " -- DepartmentId: " + resultSet.getInt("DepartmentId"));
             }
         } catch (SQLException e) {
-            throw new DbExceptions(e.getMessage());
+            throw new DbException(e.getMessage());
         } finally {
-            DB.closeAll(connection, statement, resultSet);
+            DB.closeAll(statement, resultSet);
         }
     }
 
     @Override
     public void insert() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
             preparedStatement = connection.prepareStatement(
@@ -54,57 +57,59 @@ public class Seller implements SellerInterface {
                             "(?,?,?,?,?)",
                     Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setString(1, "Vitor");
-            preparedStatement.setString(2, "vitor@email.com");
-            preparedStatement.setDate(3, new Date(sdf.parse("08/03/1994").getTime()));
-            preparedStatement.setDouble(4, 5000.00);
+            preparedStatement.setString(1, "Asdf");
+            preparedStatement.setString(2, "asdf@email.com");
+            preparedStatement.setDate(3, new Date(sdf.parse("18/03/1992").getTime()));
+            preparedStatement.setDouble(4, 1500.00);
             preparedStatement.setInt(5, 1);
 
-            int rowsAffected = preparedStatement.executeUpdate();
+            showMessageAboutRowsAffected(preparedStatement, "Done! Seller inserted: ");
 
-            if (rowsAffected > 0) {
-                resultSet = preparedStatement.getGeneratedKeys();
-                System.out.println("Done! Rows inserted: " + preparedStatement.getUpdateCount());
-            } else {
-                System.out.println("No rows affected!");
-            }
         } catch (SQLException | ParseException e) {
-            throw new DbExceptions(e.getMessage());
+            throw new DbException(e.getMessage());
         } finally {
-            DB.closeAll(connection, preparedStatement, resultSet);
+            DB.closeAll(preparedStatement, resultSet);
         }
     }
 
     @Override
     public void update() {
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
         try {
             connection = DB.getConnection();
             preparedStatement = connection.prepareStatement("UPDATE seller " +
                     "SET BaseSalary = BaseSalary + ? " +
                     "WHERE DepartmentId = ?", Statement.RETURN_GENERATED_KEYS);
 
-            preparedStatement.setDouble(1, 250.00);
+            preparedStatement.setDouble(1, 500.00);
             preparedStatement.setInt(2, 5);
 
-            int rowsAffected = preparedStatement.executeUpdate();
-
-            if (rowsAffected > 0) {
-                resultSet = preparedStatement.getGeneratedKeys();
-                System.out.println("Done! Rows updated: " + preparedStatement.getUpdateCount());
-            } else {
-                System.out.println("No rows affected!");
-            }
+            showMessageAboutRowsAffected(preparedStatement, "Done! Seller updated ");
         } catch (SQLException e) {
-            throw new DbExceptions(e.getMessage());
+            throw new DbException(e.getMessage());
         } finally {
-            DB.closeAll(connection, preparedStatement, resultSet);
+            DB.closeAll(preparedStatement, resultSet);
         }
     }
 
     @Override
     public void delete() {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'delete'");
-    }
+        Connection connection = null;
+        PreparedStatement preparedStatement = null;
+        ResultSet resultSet = null;
+        try {
+            connection = DB.getConnection();
+            preparedStatement = connection.prepareStatement("DELETE FROM Seller " +
+                    "WHERE Id = ?");
+            preparedStatement.setInt(1, 1);
 
+            showMessageAboutRowsAffected(preparedStatement, "Done! Rows deleted: ");
+        } catch (SQLException e) {
+            throw new DbException(e.getMessage());
+        } finally {
+            DB.closeAll(preparedStatement, resultSet);
+        }
+    }
 }
