@@ -17,7 +17,13 @@ public class Program {
 
         System.out.println("----------------- Sellers from Department -----------------");
         Department dep = new Department(3,null);
-        List<Seller> list = sellerDao.findByDepartment(dep);
-        list.forEach(System.out::println);
+        List<Seller> sellersByDept = sellerDao.findByDepartment(dep);
+        sellersByDept.forEach(System.out::println);
+
+        System.out.println("----------------- All Sellers  -----------------");
+        List<Seller> allSellers = sellerDao.findAll();
+        allSellers.forEach(System.out::println);
+
+        
     }
 }
