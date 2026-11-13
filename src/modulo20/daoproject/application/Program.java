@@ -1,5 +1,6 @@
 package modulo20.daoproject.application;
 
+import java.util.Date;
 import java.util.List;
 
 import modulo20.daoproject.model.dao.DaoFactory;
@@ -16,7 +17,7 @@ public class Program {
         System.out.println(seller);
 
         System.out.println("----------------- Sellers from Department -----------------");
-        Department dep = new Department(3,null);
+        Department dep = new Department(3, null);
         List<Seller> sellersByDept = sellerDao.findByDepartment(dep);
         sellersByDept.forEach(System.out::println);
 
@@ -24,6 +25,9 @@ public class Program {
         List<Seller> allSellers = sellerDao.findAll();
         allSellers.forEach(System.out::println);
 
-        
+        System.out.println("----------------- Insert Seller  -----------------");
+        Seller newSeller = new Seller(null, "Vitor", "vitor@gmail.com", new Date(), 5000.00, dep);
+        sellerDao.insert(newSeller);
+        System.out.println("Inserted! New seller id = " + newSeller.getId());
     }
 }
