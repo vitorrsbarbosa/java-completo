@@ -2,6 +2,7 @@ package modulo20.daoproject.application;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Scanner;
 
 import modulo20.daoproject.model.dao.DaoFactory;
 import modulo20.daoproject.model.dao.SellerDao;
@@ -10,6 +11,7 @@ import modulo20.daoproject.model.entities.Seller;
 
 public class Program {
     public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
 
         SellerDao sellerDao = DaoFactory.createSellerDao();
         Seller seller = sellerDao.findById(1);
@@ -35,5 +37,11 @@ public class Program {
         newSeller.setName("Jason McDonald");
         sellerDao.update(newSeller);
         System.out.println("Update completed, new seller name: " + newSeller.getName());
+
+        System.out.println("----------------- Delete Seller  -----------------");
+        System.out.print("Choose a Seller to delete: ");
+        int id = scanner.nextInt();
+        sellerDao.deleteById(id);
+        System.out.println("Seller successfully removed! ");
     }
 }
