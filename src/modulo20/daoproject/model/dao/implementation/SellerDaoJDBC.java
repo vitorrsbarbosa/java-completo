@@ -34,7 +34,6 @@ public class SellerDaoJDBC implements SellerDao {
             ps.setDate(3, new java.sql.Date(obj.getBirthDate().getTime()));
             ps.setDouble(4, obj.getBaseSalary());
             ps.setInt(5, obj.getDepartment().getId());
-
             int rowsAffected = ps.executeUpdate();
             if (rowsAffected > 0) {
                 ResultSet rs = null;
@@ -66,7 +65,6 @@ public class SellerDaoJDBC implements SellerDao {
             ps.setDouble(4, obj.getBaseSalary());
             ps.setInt(5, obj.getDepartment().getId());
             ps.setInt(6, obj.getId());
-
             ps.executeUpdate();
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
@@ -82,7 +80,6 @@ public class SellerDaoJDBC implements SellerDao {
             ps = conn.prepareStatement("DELETE FROM seller WHERE seller.Id = ?");
             ps.setInt(1, id);
             ps.executeUpdate();
-
         } catch (SQLException e) {
             throw new DbException(e.getMessage());
         } finally {
@@ -100,7 +97,6 @@ public class SellerDaoJDBC implements SellerDao {
                     + "WHERE seller.Id = ?");
             st.setInt(1, id);
             rs = st.executeQuery();
-
             if (rs.next()) {
                 Department department = instantiateDepartment(rs);
                 Seller seller = instantiateSeller(rs, department);
@@ -123,10 +119,8 @@ public class SellerDaoJDBC implements SellerDao {
                     + "FROM seller INNER JOIN department ON seller.DepartmentId = department.Id "
                     + "ORDER BY seller.Name");
             rs = ps.executeQuery();
-
             List<Seller> sellers = new ArrayList<>();
             Map<Integer, Department> map = new HashMap<>();
-
             while (rs.next()) {
                 Department dep = map.get(rs.getInt("DepartmentId"));
                 if (dep == null) {
@@ -154,10 +148,8 @@ public class SellerDaoJDBC implements SellerDao {
                     + "WHERE department.Id = ? " + "ORDER BY seller.Name");
             ps.setInt(1, d.getId());
             rs = ps.executeQuery();
-
             List<Seller> sellers = new ArrayList<>();
             Map<Integer, Department> map = new HashMap<>();
-
             while (rs.next()) {
                 Department dep = map.get(rs.getInt("DepartmentId"));
                 if (dep == null) {
